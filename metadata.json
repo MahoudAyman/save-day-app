@@ -1,0 +1,7 @@
+{
+  "name": "Moushaf - Advanced Work & Finance Tracker",
+  "description": "A comprehensive system for tracking daily work, overtime, and financial advances for workers, foremen, and artisans with advanced reporting and analytics.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
