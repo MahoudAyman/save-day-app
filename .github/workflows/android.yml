@@ -9,31 +9,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ سحب الكود من الريبو
       - uses: actions/checkout@v4
 
+      # 2️⃣ إعداد Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # 3️⃣ تثبيت dependencies
       - name: Install dependencies
         run: npm install
 
+      # 4️⃣ بناء مشروع React
       - name: Build React
         run: npm run build
 
+      # 5️⃣ إعداد Java 17
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
+      # 6️⃣ تنظيف مشروع Android قبل البناء
+      - name: Clean Android build
+        run: |
+          cd android
+          ./gradlew clean
+
+      # 7️⃣ ضبط نسخة Gradle لتجنب مشاكل التوافق
+      - name: Set Gradle version
+        run: |
+          cd android
+          ./gradlew wrapper --gradle-version 8.2
+
+      # 8️⃣ بناء APK للتصحيح
       - name: Build Debug APK
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
+      # 9️⃣ رفع APK كمرفق (Artifact)
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
